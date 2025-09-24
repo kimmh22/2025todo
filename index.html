@@ -3,97 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
-      integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <title>To-Do-List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <style>
       .bodyback {
         background-image: linear-gradient(to right, rgb(219, 73, 212), yellow);
-        display: flex;
-        justify-content: center; /* 가로 가운데 */
-        align-items: center; /* 세로 가운데 */
-        height: 100vh; /* 화면 전체 높이 */
-        margin: 0;
+        display: flex; justify-content: center; align-items: center;
+        height: 100vh; margin: 0;
       }
-
       .container {
-        /* background-image: linear-gradient(to right, red, yellow); */
-        justify-content: center;
-        
-        border:3px solid white;
-        padding: 20px;
-        border-radius: 10px;
-            -webkit-backdrop-filter: blur(8px);
-            backdrop-filter: blur(8px);
+        border: 3px solid white; padding: 20px; border-radius: 10px;
+        -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
       }
-
-      ul,
-      li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .inpMoBtn {
-        display: none;
-      }
+      ul, li { list-style: none; margin: 0; padding: 0; }
+      .inpMoBtn, .cancelBtn { display: none; }
+      /* 완료 항목 스타일(취소선) */
+      .done-text { text-decoration: line-through; color: #6c757d; }
+      /* 완료 항목의 수정/삭제 비활성(빨강 + 클릭막기) */
+      .is-done .edit, .is-done .delete { color: red; pointer-events: none; cursor: not-allowed; }
     </style>
   </head>
   <body class="bodyback">
     <div class="container py-3">
-      <h3 class="text-center text-light fw-bold " style="font-size: 75px ">
-        To-DO-List
-      </h3>
+      <h3 class="text-center text-light fw-bold" style="font-size: 75px">To-DO-List</h3>
+
+      <!-- 입력 영역 -->
       <div class="row">
-        <div class="col-md-6 offset-md-3 d-flex">
-          <input
-            type="text"
-            value=""
-            class="inp form-control me-2"
-            placeholder="오늘의 할 일을 입력하세요"
-          />
-          <button class="btn btn-primary inpBtn fw-bold fs-5" style="width: 100px ">
-            입력
-          </button>
-          <button class="btn btn-danger inpMoBtn fw-bold fs-5" style="width: 100px">
-            수정
-          </button>
-        </div>
-      </div>
-      <div class="row px-3">
-        <div class="col-md-6 offset-md-3">
-          <ul class="viewList">
-            <li class="d-flex justify-content-between py-3">
-              <!-- <div>자바</div>
-              <div class="d-flex gap-3">
-                <i class="fa-solid fa-square-check"></i>
-                <i class="fa-solid fa-pen"></i>
-                <i class="fa-solid fa-trash"></i>
-              </div>
-            </li>
-            <li class="d-flex justify-content-between">
-              <div>자바</div>
-              <div class="d-flex gap-3">
-                <i class="fa-solid fa-square"></i>
-                <i class="fa-solid fa-pen"></i>
-                <i class="fa-solid fa-trash"></i>
-              </div>
-            </li> -->
-          </ul>
+        <div class="col-md-6 offset-md-3 d-flex gap-2">
+          <input type="text" value="" class="inp form-control" placeholder="오늘의 할 일을 입력하세요"/>
+          <button class="btn btn-primary inpBtn fw-bold fs-5" style="width:100px">입력</button>
+          <button class="btn btn-danger  inpMoBtn fw-bold fs-5" style="width:100px">수정</button>
+          <button class="btn btn-secondary cancelBtn fw-bold fs-5" style="width:100px">취소</button>
         </div>
       </div>
 
+      <!-- 리스트 영역 -->
+      <div class="row px-3">
+        <div class="col-md-6 offset-md-3">
+          <ul class="viewList"></ul>
+        </div>
+      </div>
+
+      <!-- 전체 삭제 버튼 -->
       <div class="row py-3">
         <div class="col-md-6 offset-md-3">
           <div class="btn btn-danger d-block fw-bold fs-5 delAll">전체삭제</div>
@@ -101,134 +53,140 @@
       </div>
     </div>
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"
-      integrity="sha512-HvOjJrdwNpDbkGJIG2ZNqDlVqMo77qbs4Me4cah0HoDrfhrbA+8SBlZn1KrvAQw7cILLPFJvdwIgphzQmMm+Pw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
     <script>
       let listView = [];
+      let editIndex = null; // 수정 중인 index
 
-      //dom
+      // DOM
       const viewDataElem = document.querySelector(".viewList");
-      const inpElem = document.querySelector(".inp"); // value
-      const btnElem = document.querySelector(".inpBtn"); // event
-      const btnMoElem = document.querySelector(".inpMoBtn"); // event
-      const delAllbtn = document.querySelector(".delAll");
+      const inpElem     = document.querySelector(".inp");
+      const btnAdd      = document.querySelector(".inpBtn");
+      const btnSave     = document.querySelector(".inpMoBtn");
+      const btnCancel   = document.querySelector(".cancelBtn");
+      const btnDelAll   = document.querySelector(".delAll");
 
-      //추가
-      btnElem.addEventListener("click", function () {
-        if (inpElem.value != "") {
-          let value = { todo: inpElem.value, done: false }; //초기값
-          listView.push(value);
-          inpElem.value = "";
-          viewData();
-        } else {
-          alert("오늘의 할 일을 입력하세요");
+      // --- 로컬스토리지에서 복원 ---
+      const saved = localStorage.getItem("todoData");
+      if (saved) {
+        try { listView = JSON.parse(saved) || []; } catch(e) { listView = []; }
+      }
+
+      // 공통: 저장 + 렌더
+      function persist() {
+        localStorage.setItem("todoData", JSON.stringify(listView));
+        viewData();
+      }
+
+      // 추가
+      btnAdd.addEventListener("click", addItem);
+      function addItem() {
+        const text = inpElem.value.trim();
+        if (!text) return alert("오늘의 할 일을 입력하세요");
+        listView.push({ todo: text, done: false });
+        inpElem.value = "";
+        persist();
+      }
+
+      // 엔터키: 추가 또는 수정
+      inpElem.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          if (btnSave.style.display === "block") saveEdit();
+          else addItem();
         }
       });
 
-      //modify
-      btnMoElem.addEventListener("click", function () {
-          
+      // 수정 모드 진입
+      function modi(index) {
+        // 완료 항목은 수정 금지
+        if (listView[index].done) return;
 
+        editIndex = index;
+        inpElem.value = listView[index].todo;
+        inpElem.focus();
 
-
-
-        alert("진짜수정!");
-
-        //1 버튼 입력으로 변경
-        btnElem.style.display = "block";
-        btnMoElem.style.display = "none";
-        inpElem.value = "";
-      });
-
-      //function
-      //read
-      function viewData() {
-        let viewData = "";
-        listView.forEach(function (item, i) {
-          let valueData = JSON.stringify(listView);
-          localStorage.setItem('todoData', valueData);
-
-          viewData += `
-                <li class="d-flex justify-content-between py-3">
-                <div>${item.todo}</div>
-                <div class="d-flex gap-3">`;
-
-          if (item.done) {
-            viewData += `<i class="fa-solid fa-square-check " onclick="done(${i})"></i>`;
-          } else {
-            viewData += `<i class="fa-solid fa-square"  onclick="done(${i})"></i>`;
-          }
-
-          viewData += `
-                    
-                    <i class="fa-solid fa-pen" onclick="modi(${i},'${listView[i].todo}')"></i>
-                    <i class="fa-solid fa-trash" onclick="del(${i})"></i>
-                </div>
-                </li>
-            `;
-        });
-        viewDataElem.innerHTML = viewData;
+        // 버튼 토글
+        btnAdd.style.display = "none";
+        btnSave.style.display = "block";
+        btnCancel.style.display = "block";
       }
-      delAllbtn.addEventListener("click", function () {
-        if (!confirm("모든 항목을 삭제할까요?")) return;
 
+      // 수정 저장
+      btnSave.addEventListener("click", saveEdit);
+      function saveEdit() {
+        const text = inpElem.value.trim();
+        if (!text) return alert("내용을 입력하세요");
+        if (editIndex === null) return;
+
+        listView[editIndex].todo = text;
+        editIndex = null;
+
+        inpElem.value = "";
+        btnAdd.style.display = "block";
+        btnSave.style.display = "none";
+        btnCancel.style.display = "none";
+        persist();
+      }
+
+      // 수정 취소
+      btnCancel.addEventListener("click", cancelEdit);
+      function cancelEdit() {
+        editIndex = null;
+        inpElem.value = "";
+        btnAdd.style.display = "block";
+        btnSave.style.display = "none";
+        btnCancel.style.display = "none";
+      }
+
+      // 렌더링 (체크박스 → 내용 → 수정 → 삭제)
+      function viewData() {
+        let html = "";
+        listView.forEach((item, i) => {
+          html += `
+            <li class="d-flex align-items-center py-3 gap-3 ${item.done ? 'is-done' : ''}">
+              ${ item.done
+                  ? `<i class="fa-solid fa-square-check" onclick="done(${i})"></i>`
+                  : `<i class="fa-solid fa-square"       onclick="done(${i})"></i>`
+                }
+              <span class="flex-grow-1 ${item.done ? 'done-text' : ''}">${item.todo}</span>
+              <i class="fa-solid fa-pen   edit"   onclick="modi(${i})"></i>
+              <i class="fa-solid fa-trash delete" onclick="delItem(${i})"></i>
+            </li>`;
+        });
+        viewDataElem.innerHTML = html;
+      }
+
+      // 완료 토글 (항목별로만 영향)
+      function done(index) {
+        listView[index].done = !listView[index].done;
+        // 수정 중이던 항목을 완료로 바꾸면 수정모드 해제
+        if (listView[index].done && editIndex === index) cancelEdit();
+        persist();
+      }
+
+      // 개별 삭제
+      function delItem(index) {
+        if (!confirm("이 항목을 삭제할까요?")) return;
+        listView.splice(index, 1);
+        // 삭제로 인해 인덱스 체인지 → 수정모드라면 해제
+        if (editIndex !== null) cancelEdit();
+        persist();
+      }
+
+      // 전체 삭제
+      btnDelAll.addEventListener("click", () => {
+        if (!confirm("모든 항목을 삭제할까요?")) return;
         listView = [];
-        viewData();
+        cancelEdit();
+        persist();
       });
 
+      // 초기 렌더
       viewData();
 
-      //delete
-      function del(index) {
-        if (!confirm("이 항목을 삭제할까요?")) return;
-
-        listView.splice(index, 1);
-        viewData();
-      }
-
-      function modi(index, todo) {
-        // alert('수정' + todo);
-        inpElem.value = todo;
-        btnElem.style.display = "none";
-        btnMoElem.style.display = "block";
-      }
-      function done(index) {
-        // 완료 상태 토글
-        listView[index].done = !listView[index].done;
-        viewData();
-
-        // 체크박스를 누른 직후 DOM 갱신된 상태에서 아이콘 가져오기
-        const penIcon = document.querySelectorAll(".fa-pen")[index];
-        const trashIcon = document.querySelectorAll(".fa-trash")[index];
-
-        if (listView[index].done) {
-          // 완료 상태면 빨강 + 클릭 막기
-          penIcon.style.color = "red";
-          penIcon.style.pointerEvents = "none";
-
-          trashIcon.style.color = "red";
-          trashIcon.style.pointerEvents = "none";
-        } else {
-          // 다시 미완료로 바꾸면 원래대로 복귀
-          penIcon.style.color = "";
-          penIcon.style.pointerEvents = "auto";
-
-          trashIcon.style.color = "";
-          trashIcon.style.pointerEvents = "auto";
-        }
-      }
-      /*
-      개선방향
-      - done:true 이면 수정, 삭제금지
-      - done:true 이면 글자, 글자를 text-decoration:line-through
-      - done:false 원상복구
-      - 수정시 취소번튼 추가
-      - done 체크, todo title 수정, todo 삭제, 전체삭제, localStorage 반영
-      */
+      // 전역에서 호출 가능하도록(onclick에서 씀)
+      window.done    = done;
+      window.modi    = modi;
+      window.delItem = delItem;
     </script>
   </body>
 </html>
